@@ -12,8 +12,8 @@ import {
     TableFooter,
     TableHead,
     TablePagination,
-    TableRow
-} from "@mui/material";
+    TableRow, ToggleButtonGroup,
+} from '@mui/material';
 
 const Products = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -40,6 +40,9 @@ const Products = () => {
 
     return (
         <Layout>
+            <div className={"pt-3 pb-2 mb-3 border-bottom"}>
+                <Button href={"/products/create"} variant={"contained"} color={"primary"}>Add</Button>
+            </div>
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 650}} aria-label="simple table">
                     <TableHead>
@@ -66,10 +69,17 @@ const Products = () => {
                                 <TableCell align="right">{product.description}</TableCell>
                                 <TableCell align="right">{product.price}</TableCell>
                                 <TableCell align="right">
-                                    <Button variant={"contained"} color={"secondary"}
-                                            onClick={() => deleteProduct(product.id)}>
-                                        Delete
+                                  <ToggleButtonGroup>
+                                    <Button variant={'contained'}
+                                            color={'primary'} href={`/products/${product.id}/edit`}>Edit</Button>
+                                    <Button variant={'contained'}
+                                            color={'secondary'}
+                                            onClick={() => deleteProduct(
+                                                product.id)}>
+                                      Delete
                                     </Button>
+                                  </ToggleButtonGroup>
+
                                 </TableCell>
                             </TableRow>
                         ))}
