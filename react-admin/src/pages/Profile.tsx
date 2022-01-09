@@ -1,10 +1,12 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react';
+import React, {Dispatch, SyntheticEvent, useEffect, useState} from 'react';
 import Layout from '../components/Layout';
 import {Button, TextField} from '@mui/material';
 import axios, {AxiosResponse} from 'axios';
 import {User} from '../models/user';
+import {connect} from 'react-redux';
+import {setUserAction} from '../redux/actions/setUserAction';
 
-const Profile = () => {
+const Profile = (props: any) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -12,16 +14,10 @@ const Profile = () => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   useEffect(() => {
-    (
-        async () => {
-          await axios.get('user').then((res: AxiosResponse<User>) => {
-            setFirstName(res.data.first_name);
-            setLastName(res.data.last_name);
-            setEmail(res.data.email);
-          });
-        }
-    )();
-  }, []);
+    setFirstName(props.user.first_name);
+    setLastName(props.user.last_name);
+    setEmail(props.user.email);
+  }, [props.user]);
 
   const infoSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -30,6 +26,8 @@ const Profile = () => {
       first_name: firstName,
       last_name: lastName,
       email: email,
+    }).then((res) => {
+      props.setUser(res.data);
     });
   };
 
@@ -81,4 +79,14 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+// Get the events from the other components
+const mapStateToProps = (state: { user: User }) => ({
+  user: state.user,
+});
+
+// Send an event to the other components
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  setUser: (user: User) => dispatch(setUserAction(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

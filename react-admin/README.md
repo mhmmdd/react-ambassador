@@ -53,3 +53,15 @@ npm install @mui/material @emotion/react @emotion/styled
 // with yarn
 yarn add @mui/material @emotion/react @emotion/styled
 ```
+
+
+## Redux
+```bash
+$ npm i react-redux
+```
+```bash
+$ npm i -D @types/react-redux
+```
+```bash
+$ npm i -D @types/redux
+```
