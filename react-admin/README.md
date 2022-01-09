@@ -54,8 +54,16 @@ npm install @mui/material @emotion/react @emotion/styled
 yarn add @mui/material @emotion/react @emotion/styled
 ```
 
+## React
+npx create-react-app react-admin --template typescript
 
-## Redux
+### React Router Dom
+npm i react-router-dom
+npm i -D @types/react-router-dom
+
+npm i axios
+
+### Redux
 ```bash
 $ npm i react-redux
 ```
